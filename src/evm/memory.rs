@@ -54,5 +54,18 @@ impl Memory {
         
         Ok(U256::from_big_endian(&bytes))
    }
+
+   pub fn load_range(&self, offset: usize, length: usize) -> Vec<u8> {
+
+        let required_size = offset + length; 
+
+        if required_size > self.memory.len() {
+            let mut result = self.memory[offset..].to_vec();
+            result.resize(length, 0); // pad the remaining numbers with zeroes 
+            return result; 
+        }
+
+        self.memory[offset..offset + length].to_vec()
+   }
  
 }
