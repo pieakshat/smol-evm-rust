@@ -9,7 +9,6 @@ pub enum MemoryError {
     MemoryAccessError,
 }
 
-
 impl Memory {
 
     pub fn new() -> Self {
@@ -19,14 +18,13 @@ impl Memory {
     }
 
     pub fn store(&mut self, offset: usize, value: U256) -> Result<(), MemoryError> {
-        // EVM MSTORE stores 32 bytes (a word) starting at offset
+        
         let required_size = offset + 32;
         
         if required_size > self.memory.len() {
             self.memory.resize(required_size, 0);
         }
 
-        // Convert U256 to bytes (big-endian, 32 bytes)
         let mut bytes = [0u8; 32];
         value.to_big_endian(&mut bytes);
         
@@ -61,7 +59,7 @@ impl Memory {
 
         if required_size > self.memory.len() {
             let mut result = self.memory[offset..].to_vec();
-            result.resize(length, 0); // pad the remaining numbers with zeroes 
+            result.resize(length, 0); 
             return result; 
         }
 

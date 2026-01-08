@@ -2,13 +2,16 @@ use stack::Stack;
 use memory::Memory;
 use calldata::Calldata;
 use primitive_types::U256; 
+use storage::Storage;
 
+pub type Address = [u8; 20];
 
-struct ExecutionContext {
+pub struct ExecutionContext {
     code: Vec<u8>, 
     stack: Stack, 
     memory: Memory, 
     calldata: Calldata, 
+    contractAddress: Address,
     pc: usize, 
     stopped: bool, 
     return_data: Vec<u8>,
@@ -16,12 +19,13 @@ struct ExecutionContext {
 
 impl ExecutionContext {
 
-    pub fn new() -> Self {
+    pub fn new(contractAddress: Address, code: Vec<u8>, calldata: Vec<u8>) -> Self {
         ExecutionContext {
-            code: Vec::new(), 
-            stack: Stack::new(). 
+            code,  
+            stack: Stack::new(), 
             memory: Memory::new(), 
-            calldata: Calldata::new(Vec::new()), 
+            calldata: Calldata::new(calldata),  
+            contractAddress, 
             pc: 0, 
             stopped: false, 
             return_data: Vec::new() 
