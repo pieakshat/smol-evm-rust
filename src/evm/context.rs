@@ -32,19 +32,32 @@ impl ExecutionContext {
         }
     }
 
-    pub fn set_return_data(&mut self, offset: usize, length: usize) -> Result<()> {
-        self.stopped = true; 
-        self.return_data = self.memory.load_range(offset, length);
-        Ok(())
+    pub fn stack_mut(&mut self) -> &mut Stack {
+        &mut self.stack
     }
 
-    pub fn stop(&mut self) -> Result<()> {
-        self.stopped = true; 
+    pub fn stack(&self) -> &Stack {
+        &self.stack
     }
 
-    pub fn set_pc(&mut self, pc: usize) -> Result<()> {
-        self.pc = pc; 
-        Ok(())
+    pub fn memory_mut(&mut self) -> &mut Memory {
+        &mut self.memory
+    }
+
+    pub fn memory(&self) -> &Memory {
+        &self.memory
+    }
+
+    pub fn pc(&self) -> usize {
+        self.pc
+    }
+
+    pub fn increment_pc(&mut self) {
+        self.pc += 1; 
+    }
+
+    pub fn set_pc(&mut self, pc: usize) {
+        self.pc = pc;
     }
 
     pub fn read_code(&self, num_bytes: usize) -> Vec<u8> {
@@ -57,6 +70,32 @@ impl ExecutionContext {
             }
         }
         bytes
+    }
+
+    pub fn code(&self) -> &Vec<u8> {
+        &self.code
+    }
+
+    pub fn stopped(&self) -> bool {
+        self.stopped
+    }
+
+    pub fn stop(&mut self) {
+        self.stopped = true; 
+    }
+
+    pub fn set_return_data(&mut self, offset: usize, length: usize) -> Result<()> {
+        self.stopped = true; 
+        self.return_data = self.memory.load_range(offset, length);
+        Ok(())
+    }
+
+    pub fn return_data(&self) -> &Vec<u8> {
+        &self.return_data
+    }
+
+    pub fn contract_address(&self) -> &Address {
+        &self.contractAddress
     }
 
 }

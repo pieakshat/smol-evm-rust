@@ -165,3 +165,23 @@ When is `ExecutionContext` created?
 
   Think of it like a function call in programming: the function's local variables exist only while the function is executing, then they're gone.
   ExecutionContext is similar — it exists only during execution of a contract call.
+
+
+
+/// this will be at the EVM level not execution level 
+
+  Ethereum storage structure
+
+  World State
+├── Account State Database
+│   ├── contractAddress_1 → { balance, nonce, codeHash, storageRoot }
+│   ├── contractAddress_2 → { balance, nonce, codeHash, storageRoot }
+│   └── ...
+└── Storage Database (separate or nested)
+    ├── contractAddress_1
+    │   ├── slot_0 → value_0
+    │   ├── slot_1 → value_1
+    │   └── ...
+    ├── contractAddress_2
+    │   ├── slot_0 → value_0
+    │   └── ...
