@@ -65,5 +65,27 @@ impl Memory {
 
         self.memory[offset..offset + length].to_vec()
    }
+
+   pub fn store_bytes(&mut self, offset: usize, data: &[u8]) {
+        let required_size = offset + data.len();
+        if required_size > self.memory.len() {
+            self.memory.resize(required_size, 0);
+        }
+        for (i, &byte) in data.iter().enumerate() {
+            self.memory[offset + i] = byte;
+        }
+   }
+
+   pub fn store_byte(&mut self, offset: usize, byte: u8) {
+        let required_size = offset + 1;
+        if required_size > self.memory.len() {
+            self.memory.resize(required_size, 0);
+        }
+        self.memory[offset] = byte;
+   }
+
+   pub fn size(&self) -> usize {
+        self.memory.len()
+   }
  
 }

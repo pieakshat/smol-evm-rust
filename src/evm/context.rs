@@ -98,4 +98,13 @@ impl ExecutionContext {
         &self.contractAddress
     }
 
+    // Calldata accessors
+    pub fn calldata(&self) -> &Calldata {
+        &self.calldata
+    }
+
+    pub fn calldata_mut(&mut self) -> &mut Calldata {
+        &mut self.calldata
+    }
+
 }
